@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useCreateUserWithEmailAndPassword,  } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile,  } from 'react-firebase-hooks/auth';
 import auth from "../firebase.config";
-
+import { toast } from 'react-toastify';
+ 
 const Registration = () => {
+  const [updateProfile, updating, UpError] = useUpdateProfile(auth);
     const [
       createUserWithEmailAndPassword,
       user,
@@ -18,15 +20,37 @@ const Registration = () => {
     formState: { errors },
   } = useForm()
 
-    const onSubmit = (data) => {
-      createUserWithEmailAndPassword(data?.email, data?.password)
+  const onSubmit = async (data) => {
+      const user= { name :data.name,
+                    email:data.email
+    }
+    fetch('http://localhost:5000/user',{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({user})
+    })
+      .then(res => res.json())
+      .then(data => {
+      
+            if(data.insertedId){
+                toast.success('user create')
+              
+            }
+            else{
+               toast.error('Oh no try again later')
+            }
+        })
+    await createUserWithEmailAndPassword(data?.email, data?.password)
+    await updateProfile({ displayName : data?.name });
     }
     console.log(user, loading, error);
-    if(loading){
+    if(loading | updating){
       return <p>Loading...</p>
     }
     let errorMassage
-        if(error){
+  if (error | UpError){
              errorMassage = <div className='text-red-500'>Error: {error?.message}</div>
         }
     return (

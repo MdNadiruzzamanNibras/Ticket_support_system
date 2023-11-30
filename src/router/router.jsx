@@ -3,6 +3,7 @@ import App from "../App";
 import Home from "../Home/Home";
 import Registration from "../Login/Registration";
 import Login from "../Login/Login";
+import CreateSupport from "../Home/CreateSupport";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path:"/login",
         element:<Login/>
+      },
+      {
+        path:"/create",
+        element:<CreateSupport/>
       },
       
       
