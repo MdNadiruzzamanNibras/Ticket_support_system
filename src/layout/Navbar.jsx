@@ -3,14 +3,17 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import auth from "../firebase.config";
 import { signOut } from "firebase/auth";
+import useAdmin from "../Hooks/uesAdmin";
 
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false);
     const [user] = useAuthState(auth);
+    const [admin] =useAdmin(user)
     const logout = () => {
         signOut(auth);
        
-      };
+    };
+    console.log(admin);
     return (
        <nav className="w-full bg-white shadow">
             <div className="justify-between px-4 mx-auto  md:items-center md:flex md:px-8">
@@ -74,6 +77,11 @@ const Navbar = () => {
                                New Ticket
                             </li>
                             </Link>
+                            { <Link to="/all">
+                             <li className="text-gray-600 hover:text-blue-600">
+                               All
+                            </li>
+                            </Link>}
                             
                              
   {user ? (

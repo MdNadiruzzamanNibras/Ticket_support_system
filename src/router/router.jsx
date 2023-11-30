@@ -4,6 +4,8 @@ import Home from "../Home/Home";
 import Registration from "../Login/Registration";
 import Login from "../Login/Login";
 import CreateSupport from "../Home/CreateSupport";
+import All from "../Home/All";
+import ReplyAsk from "../Home/ReplyAsk";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ export const router = createBrowserRouter([
       {
         path:"/create",
         element:<CreateSupport/>
+      },
+      {
+        path:"/all",
+        element:<All/>
+      },
+      {
+        path:"/reply/:id",
+        element:<ReplyAsk/>
       },
       
       
